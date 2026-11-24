@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+  />
+  <meta name="theme-color" content="#060a14" />
+  <title>ZAN MUSIC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Latar Ambient Ringan (GPU Accelerated) -->
+  <div class="ambient-bg" aria-hidden="true">
+    <div class="orb orb-a"></div>
+    <div class="orb orb-b"></div>
+  </div>
+
+  <!-- Toast Notifikasi UI -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <div id="app" class="app-container">
+    <!-- ==================== HALAMAN 1: MUSIK ==================== -->
+    <main id="page-musik" class="page active" aria-label="Halaman Musik">
+      <header class="top-header">
+        <div class="brand-wrap">
+          <img src="assets/icon.svg" alt="Logo ZAN MUSIC" class="brand-icon" />
+          <div>
+            <span class="brand-name">ZAN MUSIC</span>
+            <span class="brand-tag">Lokal • Offline</span>
+          </div>
+        </div>
+        <button type="button" id="quick-import-btn" class="icon-pill-btn" aria-label="Tambah musik">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Impor</span>
+        </button>
+      </header>
+
+      <section class="greeting-box">
+        <h1 id="greeting-title" class="greeting-title">Halo, Pendengar</h1>
+        <p class="greeting-desc">Suara favoritmu tersimpan rapi dan siap diputar kapan saja di perangkat ini.</p>
+      </section>
+
+      <!-- Hero Section: Sedang Diputar -->
+      <section class="hero-glass glass-card" id="hero-section">
+        <div class="hero-top-row">
+          <span class="pill-badge">SEDANG DIPUTAR</span>
+          <span class="hero-duration" id="hero-duration">00:00</span>
+        </div>
+
+        <div class="hero-body">
+          <button type="button" id="hero-art-btn" class="hero-artwork" aria-label="Buka tampilan Now Playing">
+            <span class="art-glyph" id="hero-art-glyph">♪</span>
+          </button>
+
+          <div class="hero-meta">
+            <h2 id="hero-title" class="truncate">Belum Ada Lagu Diputar</h2>
+            <p id="hero-artist" class="truncate">Tambahkan musik lokal untuk mulai memutar</p>
+            <div class="hero-controls">
+              <button type="button" id="hero-play-btn" class="btn-primary-glass">
+                <span id="hero-play-icon">▶</span>
+                <span id="hero-play-text">Putar Musik</span>
+              </button>
+              <button type="button" id="hero-expand-btn" class="btn-circle-glass" aria-label="Perbesar pemutar">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <polyline points="9 21 3 21 3 15"></polyline>
+                  <line x1="21" y1="3" x2="14" y2="10"></line>
+                  <line x1="3" y1="21" x2="10" y2="14"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sering Didengarkan -->
+      <section class="content-section">
+        <div class="section-head">
+          <h2>Sering Didengarkan</h2>
+          <button type="button" class="link-action" data-go-tab="playlist">Lihat Semua</button>
+        </div>
+        <div id="frequent-tracks" class="horizontal-row"></div>
+      </section>
+
+      <!-- Rekomendasi Koleksi Lokal -->
+      <section class="content-section">
+        <div class="section-head">
+          <h2>Rekomendasi Koleksi Lokal</h2>
+          <button type="button" id="refresh-recommend-btn" class="link-action">Acak</button>
+        </div>
+        <div id="recommended-tracks" class="vertical-list"></div>
+      </section>
+    </main>
+
+    <!-- ==================== HALAMAN 2: PLAYLIST ==================== -->
+    <main id="page-playlist" class="page" aria-label="Halaman Playlist">
+      <header class="top-header">
+        <div>
+          <h1 class="page-heading">Playlist Lokal</h1>
+          <p class="page-sub" id="playlist-subtitle">0 lagu di perangkat</p>
+        </div>
+        <button type="button" id="add-music-btn" class="btn-primary-glass">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Tambah Musik</span>
+        </button>
+      </header>
+
+      <!-- Pencarian Musik -->
+      <div class="search-glass glass-card">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input
+          type="search"
+          id="search-input"
+          placeholder="Cari judul lagu atau nama artis..."
+          autocomplete="off"
+        />
+        <button type="button" id="clear-search-btn" class="clear-search hidden" aria-label="Bersihkan pencarian">✕</button>
+      </div>
+
+      <!-- Empty State -->
+      <div id="empty-playlist" class="empty-glass glass-card hidden">
+        <div class="empty-badge">♪</div>
+        <h3>Belum Ada Musik Tersimpan</h3>
+        <p>Pilih satu atau beberapa file MP3, WAV, M4A, atau OGG dari penyimpanan HP Anda. Semua disimpan secara lokal.</p>
+        <button type="button" id="empty-add-btn" class="btn-primary-glass">Pilih File Musik</button>
+      </div>
+
+      <!-- Daftar Semua Musik -->
+      <div id="playlist-tracks" class="vertical-list"></div>
+    </main>
+
+    <!-- ==================== HALAMAN 3: SAYA ==================== -->
+    <main id="page-saya" class="page" aria-label="Halaman Statistik Saya">
+      <header class="top-header">
+        <div>
+          <h1 class="page-heading">Statistik Saya</h1>
+          <p class="page-sub">Ringkasan pemutaran musik lokal di perangkat ini</p>
+        </div>
+      </header>
+
+      <!-- 4 Kartu Statistik Utama -->
+      <section class="stats-grid">
+        <div class="stat-box glass-card">
+          <span class="stat-title">Total Pemutaran</span>
+          <strong class="stat-num" id="stat-total-plays">0</strong>
+        </div>
+        <div class="stat-box glass-card">
+          <span class="stat-title">Jumlah Musik</span>
+          <strong class="stat-num" id="stat-total-tracks">0</strong>
+        </div>
+        <div class="stat-box glass-card">
+          <span class="stat-title">Jumlah Artis</span>
+          <strong class="stat-num" id="stat-total-artists">0</strong>
+        </div>
+        <div class="stat-box glass-card">
+          <span class="stat-title">Bulan Ini</span>
+          <strong class="stat-num" id="stat-month-plays">0</strong>
+        </div>
+      </section>
+
+      <!-- Grafik Aktivitas 7 Hari Terakhir -->
+      <section class="chart-box glass-card">
+        <div class="section-head">
+          <h2>Aktivitas 7 Hari Terakhir</h2>
+          <span class="muted-small" id="chart-total-7d">0 putaran</span>
+        </div>
+        <div id="weekly-chart" class="weekly-chart" role="img" aria-label="Grafik aktivitas pemutaran 7 hari terakhir"></div>
+      </section>
+
+      <!-- Lagu Paling Sering Diputar -->
+      <section class="top-track-box glass-card">
+        <div class="section-head">
+          <h2>Lagu Paling Sering Diputar</h2>
+          <span class="muted-small" id="top-track-count">0x</span>
+        </div>
+        <div id="most-played-card" class="most-played-inner">
+          <div class="most-played-info">
+            <strong id="top-track-title" class="truncate">Belum ada data</strong>
+            <span id="top-track-artist" class="truncate">Putar lagu untuk melihat favoritmu</span>
+          </div>
+          <button type="button" id="play-top-track-btn" class="btn-circle-glass" aria-label="Putar lagu terfavorit" disabled>
+            ▶
+          </button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Input File Multi-Pilih -->
+  <input
+    type="file"
+    id="music-file-input"
+    accept="audio/*,.mp3,.wav,.m4a,.ogg,.aac,.flac"
+    multiple
+    hidden
+  />
+
+  <!-- ==================== MINI PLAYER (PERSISTEN) ==================== -->
+  <aside id="mini-player" class="mini-player glass-dock" aria-label="Mini Player">
+    <div class="mini-progress-track">
+      <div id="mini-progress-fill" class="mini-progress-fill"></div>
+    </div>
+
+    <div class="mini-player-inner">
+      <button type="button" id="mini-open-full" class="mini-meta-btn" aria-label="Buka pemutar penuh">
+        <div class="mini-art" id="mini-art">♪</div>
+        <div class="mini-text">
+          <div id="mini-title" class="mini-title truncate">Tidak Ada Lagu</div>
+          <div id="mini-artist" class="mini-artist truncate">ZAN MUSIC</div>
+        </div>
+      </button>
+
+      <div class="mini-time" id="mini-time">0:00 / 0:00</div>
+
+      <div class="mini-actions">
+        <button type="button" id="mini-prev-btn" class="ctrl-btn" aria-label="Lagu sebelumnya">⏮</button>
+        <button type="button" id="mini-play-btn" class="ctrl-btn play-main" aria-label="Putar atau jeda">▶</button>
+        <button type="button" id="mini-next-btn" class="ctrl-btn" aria-label="Lagu berikutnya">⏭</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ==================== BOTTOM NAVIGATION (LIQUID GLASS) ==================== -->
+  <nav id="bottom-nav" class="bottom-nav glass-dock" aria-label="Navigasi Utama">
+    <button type="button" class="nav-item active" data-tab="musik" aria-label="Musik">
+      <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M9 18V5l12-2v13"></path>
+        <circle cx="6" cy="18" r="3"></circle>
+        <circle cx="18" cy="16" r="3"></circle>
+      </svg>
+      <span>Musik</span>
+    </button>
+
+    <button type="button" class="nav-item" data-tab="playlist" aria-label="Playlist">
+      <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="8" y1="6" x2="21" y2="6"></line>
+        <line x1="8" y1="12" x2="21" y2="12"></line>
+        <line x1="8" y1="18" x2="21" y2="18"></line>
+        <circle cx="4" cy="6" r="1.2" fill="currentColor"></circle>
+        <circle cx="4" cy="12" r="1.2" fill="currentColor"></circle>
+        <circle cx="4" cy="18" r="1.2" fill="currentColor"></circle>
+      </svg>
+      <span>Playlist</span>
+    </button>
+
+    <button type="button" class="nav-item" data-tab="saya" aria-label="Saya">
+      <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+        <circle cx="12" cy="7" r="4"></circle>
+      </svg>
+      <span>Saya</span>
+    </button>
+  </nav>
+
+  <!-- ==================== NOW PLAYING FULLSCREEN MODAL ==================== -->
+  <section id="now-playing-modal" class="now-playing-modal" aria-hidden="true" aria-label="Tampilan Pemutar Penuh">
+    <div class="np-backdrop"></div>
+    <div class="np-sheet">
+      <header class="np-header">
+        <button type="button" id="np-close-btn" class="btn-circle-glass" aria-label="Tutup Now Playing">⌄</button>
+        <span class="np-label">SEDANG DIPUTAR</span>
+        <button type="button" id="np-edit-btn" class="btn-circle-glass" aria-label="Edit info lagu">✎</button>
+      </header>
+
+      <div class="np-artwork-wrap">
+        <div id="np-artwork" class="np-artwork">♪</div>
+      </div>
+
+      <div class="np-info">
+        <h2 id="np-title" class="truncate">Belum Ada Lagu</h2>
+        <p id="np-artist" class="truncate">ZAN MUSIC</p>
+      </div>
+
+      <div class="np-scrubber-wrap">
+        <input type="range" id="np-seek-slider" class="seek-slider" min="0" max="100" value="0" step="0.1" aria-label="Posisi pemutaran" />
+        <div class="np-times">
+          <span id="np-current-time">0:00</span>
+          <span id="np-total-time">0:00</span>
+        </div>
+      </div>
+
+      <div class="np-controls">
+        <button type="button" id="np-prev-btn" class="np-btn-side" aria-label="Lagu sebelumnya">⏮</button>
+        <button type="button" id="np-play-btn" class="np-btn-main" aria-label="Putar atau jeda">▶</button>
+        <button type="button" id="np-next-btn" class="np-btn-side" aria-label="Lagu berikutnya">⏭</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MODAL EDIT JUDUL & ARTIS ==================== -->
+  <div id="edit-modal" class="dialog-backdrop" aria-hidden="true">
+    <div class="dialog-card glass-card" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title">
+      <h3 id="edit-modal-title">Edit Informasi Musik</h3>
+      <form id="edit-track-form" class="dialog-form">
+        <label class="field-label" for="edit-title-input">Judul Lagu</label>
+        <input type="text" id="edit-title-input" class="field-input" required maxlength="140" />
+
+        <label class="field-label" for="edit-artist-input">Nama Artis</label>
+        <input type="text" id="edit-artist-input" class="field-input" required maxlength="140" />
+
+        <div class="dialog-actions">
+          <button type="button" id="cancel-edit-btn" class="btn-secondary-glass">Batal</button>
+          <button type="submit" class="btn-primary-glass">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Elemen Audio HTML5 Utama -->
+  <audio id="audio-engine" preload="metadata"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
