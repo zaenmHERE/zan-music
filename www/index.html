@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#0c0d12">
+  <title>ZAN Music</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app">
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-icon">Z</div>
+        <div>
+          <h2>ZAN<span>Music</span></h2>
+          <small>Your music universe</small>
+        </div>
+      </div>
+
+      <button class="icon-btn" id="themeBtn" aria-label="Ganti tema">
+        <span id="themeIcon">☼</span>
+      </button>
+    </header>
+
+    <main>
+
+      <!-- HOME -->
+      <section class="page active" id="homePage">
+
+        <div class="greeting">
+          <p class="eyebrow">YOUR PERSONAL MUSIC PLAYER</p>
+          <h1>Feel the <span>music.</span></h1>
+          <p class="muted">Listen to your favorite moments.</p>
+        </div>
+
+        <div class="section-heading">
+          <h3>Now Playing</h3>
+          <span class="live-dot">LOCAL PLAYER</span>
+        </div>
+
+        <div class="player-card glass">
+
+          <div class="cover" id="cover">
+            <div class="cover-art">
+              <span>♪</span>
+            </div>
+          </div>
+
+          <div class="song-details">
+            <div class="song-info">
+              <div>
+                <h2 id="songTitle">No music selected</h2>
+                <p id="songArtist">Unknown Artist</p>
+              </div>
+              <button class="icon-btn heart-btn" id="favoriteBtn">♡</button>
+            </div>
+
+            <div class="progress-area">
+              <input
+                type="range"
+                id="progress"
+                min="0"
+                max="100"
+                value="0"
+              >
+              <div class="time-row">
+                <span id="currentTime">0:00</span>
+                <span id="duration">0:00</span>
+              </div>
+            </div>
+
+            <div class="controls">
+              <button class="control-btn" id="prevBtn">|◀</button>
+              <button class="play-btn" id="playBtn">▶</button>
+              <button class="control-btn" id="nextBtn">▶|</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-heading">
+          <h3>Your Library</h3>
+          <button class="text-btn" id="browseBtn">+ Add Music</button>
+        </div>
+
+        <div class="library-card glass" id="library">
+          <div class="empty-state">
+            <div class="empty-icon">♫</div>
+            <h3>Your library is empty</h3>
+            <p>Import MP3 files to start listening.</p>
+            <button class="primary-btn" id="importBtn">
+              Import Music
+            </button>
+          </div>
+        </div>
+
+        <input
+          type="file"
+          id="fileInput"
+          accept="audio/mpeg,audio/mp3,audio/*"
+          multiple
+          hidden
+        >
+
+      </section>
+
+      <!-- LIBRARY -->
+      <section class="page" id="libraryPage">
+        <div class="page-heading">
+          <p class="eyebrow">YOUR COLLECTION</p>
+          <h1>Music Library</h1>
+        </div>
+
+        <div class="glass library-card" id="libraryFull">
+          <p class="muted">Your imported music will appear here.</p>
+        </div>
+
+        <button class="primary-btn full-btn" id="libraryImport">
+          + Import Music
+        </button>
+      </section>
+
+      <!-- STATISTICS -->
+      <section class="page" id="statsPage">
+        <div class="page-heading">
+          <p class="eyebrow">YOUR LISTENING HISTORY</p>
+          <h1>Statistics</h1>
+        </div>
+
+        <div class="glass stats-main">
+          <p class="muted">TOTAL LISTENING TIME</p>
+          <h2 id="monthlyTime">0 <span>min</span></h2>
+          <p class="muted" id="monthLabel">This month</p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="glass stat-box">
+            <p>Tracks played</p>
+            <h2 id="tracksPlayed">0</h2>
+          </div>
+
+          <div class="glass stat-box">
+            <p>Active days</p>
+            <h2 id="activeDays">0</h2>
+          </div>
+        </div>
+
+        <div class="glass chart-card">
+          <h3>Listening activity</h3>
+          <div id="activityChart" class="chart">
+            <p class="muted">Your listening activity will appear here.</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="bottom-nav glass">
+      <button class="nav-item active" data-page="homePage">
+        <span>⌂</span>
+        <small>Home</small>
+      </button>
+
+      <button class="nav-item" data-page="libraryPage">
+        <span>♫</span>
+        <small>Library</small>
+      </button>
+
+      <button class="nav-item" data-page="statsPage">
+        <span>▥</span>
+        <small>Stats</small>
+      </button>
+    </nav>
+
+  </div>
+
+  <audio id="audioPlayer" preload="metadata"></audio>
+
+  <script src="script.js"></script>
+</body>
+</html>
